@@ -5,7 +5,7 @@ If you ship the same image you build with, your production container contains de
 
 > Emily's roommates want to play with her bunnies again, so she needs to bring her bunnies from SF to Berkeley. The problem is that the bunnies need a literbox, hay, pellets, water, and fresh fruit and vegetables. So doing this even once is extremely slow and time consuming.
 
-> So to fix this, Emily builds them the litterbox, puts the hay in, and prepare the water and fruit in Berkeley, so when she wants to move the bunnies all she needs to do is put them in a small carrier and bring them over.
+> So to fix this, Enily builds them the litterbox, puts the hay in, and prepare the water and fruit in Berkeley, so when she wants to move the bunnies all she needs to do is put them in a small carrier and bring them over.
 
 **The Solution**
 Use multi-stage builds. Install full dependencies once, build the app, then copy only the runtime artifacts and production dependencies into the final image. Smaller, faster, safer.

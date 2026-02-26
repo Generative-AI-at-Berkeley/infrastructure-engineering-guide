@@ -28,7 +28,7 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: projects/123456789/locations/global/workloadIdentityPools/gha/providers/gha
-          service_account: deployer-stage@valdera-stage.iam.gserviceaccount.com
+          service_account: deployer-stage@example-stage.iam.gserviceaccount.com
 
       - name: Deploy
         run: ./scripts/deploy --env=stage

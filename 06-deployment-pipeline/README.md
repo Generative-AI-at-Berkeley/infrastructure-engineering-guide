@@ -3,7 +3,7 @@
 **The Problem**
 Deploys done by hand are slow, inconsistent, and risky. If you deploy code before running migrations, you ship a guaranteed outage. If every deploy is a snowflake, you cannot roll back or reason about what happened.
 
-> even tho hilary already set up a CI, she lowkey has anxiety and makes a pipeline so that --> WHEN the text succeeds after being checked against the rules she set, it gets automatically sent to a Andrea with the right context to get a second opinion before manually sending it to her crush. 
+> even tho hilary already set up a CI, she lowkey has anxiety and makes a pipeline so that --> WHEN the text succeeds after being checked against the rules she set, it gets automatically sent to a Andrea with the right context to get a second opinion before manually sending it to her crush.
 
 **The Solution**
 Use a chained deployment workflow. CI success triggers staging deploys. Production deploys are a manual merge to `prod`. Migrations run before deploys with `wait: true`. Images are dual tagged so you can always trace the exact commit that shipped. Concurrency control prevents overlapping deploys.

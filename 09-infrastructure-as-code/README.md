@@ -20,12 +20,12 @@ Below are Terraform snippets that show the core patterns: VPC networking, a serv
 ```hcl
 # vpc.tf
 resource "google_compute_network" "main" {
-  name                    = "valdera-vpc"
+  name                    = "example-vpc"
   auto_create_subnetworks = false # Keep subnets explicit and intentional.
 }
 
 resource "google_compute_subnetwork" "private" {
-  name          = "valdera-private"
+  name          = "example-private"
   ip_cidr_range = "10.10.0.0/16"
   region        = var.region
   network       = google_compute_network.main.id

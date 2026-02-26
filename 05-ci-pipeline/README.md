@@ -3,6 +3,16 @@
 **The Problem**
 Without CI, every PR becomes a manual test session. People forget to run linters, tests are flaky, and bugs slip through. In monorepos it gets worse because every tiny change triggers everything, and CI becomes slow and expensive.
 
+> Hilary is about to send a really really risky text to her crush she met on Hinge. She thinks it'll green so she full sends with a text saying "do you want to go get sushi in SF? the fish there is really really fresh and the otoro tastes better than the ones they serve in Japan
+
+> She forgot that boy was highly fatally allergic to seafood
+
+> gg
+
+> Hilary sets up a CI, and in the CI she makes sure to check every single risky text against a collection of rules and things to avoid.
+
+> When hilary asks her next hinge date out (since the last hinge date she literally proposed 1st degree manslaughter), the risky text is automatically checked against everything, including allergies. so every single time she will know if a text will green or not.
+
 **The Solution**
 Use GitHub Actions with path filtering to run only the relevant checks. Spin up real service containers (Postgres) so tests run against the same dependencies you use in production. Gate merges on a single `check` command that includes linting, formatting, type checks, circular dependency checks, and unused export checks.
 
