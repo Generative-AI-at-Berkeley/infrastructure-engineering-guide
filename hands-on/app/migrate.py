@@ -3,6 +3,7 @@ from pathlib import Path
 from db import get_conn
 
 MIGRATIONS_DIR = Path(__file__).resolve().parent.parent / "migrations"
+LOG_PATH = "/Users/helluri/gen-ai-berk/infrastructure-engineering-guide/.cursor/debug-1b920d.log"
 
 
 def ensure_migrations_table(cur):
@@ -28,6 +29,27 @@ def main():
         return
 
     with get_conn() as conn:
+        # #region agent log
+        import json
+
+        try:
+            with open(LOG_PATH, "a") as f:
+                f.write(
+                    json.dumps(
+                        {
+                            "sessionId": "1b920d",
+                            "hypothesisId": "C",
+                            "location": "migrate.py:main",
+                            "message": "get_conn succeeded",
+                            "data": {},
+                            "timestamp": __import__("time").time() * 1000,
+                        }
+                    )
+                    + "\n"
+                )
+        except Exception:
+            pass
+        # #endregion
         with conn.cursor() as cur:
             ensure_migrations_table(cur)
             applied = get_applied_ids(cur)

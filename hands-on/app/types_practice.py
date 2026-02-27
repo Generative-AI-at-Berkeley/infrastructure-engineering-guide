@@ -3,7 +3,7 @@ from typing import TypedDict
 
 from db import get_conn
 
-
+#hi
 class StudentRow(TypedDict):
     id: int
     name: str
