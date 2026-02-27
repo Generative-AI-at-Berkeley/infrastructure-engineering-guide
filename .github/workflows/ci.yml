@@ -1,0 +1,41 @@
+name: Hands-On CI
+
+on:
+  pull_request:
+    paths:
+      - "hands-on/**"
+      - ".github/workflows/ci.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "hands-on/**"
+      - ".github/workflows/ci.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  hands_on_quality:
+    name: Hands-On quality (ruff, ty)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hands-on
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+
+      - name: Install deps
+        run: |
+          uv venv
+          uv pip install -r requirements.txt
+          uv tool install ruff
+          uv tool install ty
+
+      - name: Ruff
+        run: ruff check app && ruff format --check app
+
+      - name: Ty
+        run: ty check app

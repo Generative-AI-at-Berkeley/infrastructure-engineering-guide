@@ -11,8 +11,12 @@ model Student {
   id        Int      @id @default(autoincrement())
   name      String
   classYear Int      @map("class_year")
-  email     String?
-  createdAt DateTime @default(now()) @map("created_at")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
   @@map("students")
+}
+
+model schema_migrations {
+  id         String   @id
+  applied_at DateTime @default(now()) @db.Timestamptz(6)
 }

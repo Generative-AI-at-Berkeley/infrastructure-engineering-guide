@@ -1,0 +1,4 @@
+{"sessionId": "1b920d", "hypothesisId": "A", "location": "db.py:get_conn", "message": "DATABASE_URL and stripped URL", "data": {"raw_has_schema": true, "stripped": true}, "timestamp": 1772180562460.287}
+{"sessionId": "1b920d", "hypothesisId": "C", "location": "migrate.py:main", "message": "get_conn succeeded", "data": {}, "timestamp": 1772180562501.6892}
+{"sessionId": "1b920d", "hypothesisId": "A", "location": "db.py:get_conn", "message": "DATABASE_URL and stripped URL", "data": {"raw_has_schema": true, "stripped": true}, "timestamp": 1772180624160.2222}
+{"sessionId": "1b920d", "hypothesisId": "C", "location": "migrate.py:main", "message": "get_conn succeeded", "data": {}, "timestamp": 1772180624232.2878}
