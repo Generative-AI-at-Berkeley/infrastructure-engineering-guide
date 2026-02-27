@@ -1,0 +1,32 @@
+[tools]
+python = "3.11"
+node = "20"
+uv = "latest"
+
+[env]
+DATABASE_URL = "postgresql://app:app@localhost:5432/app?schema=public"
+
+[tasks.install]
+description = "Install Python and Prisma dependencies."
+run = """
+uv venv
+uv pip install -r requirements.txt
+npm install
+"""
+
+[tasks.migrate]
+description = "Apply SQL migrations, then sync and generate Prisma client from the same schema."
+run = """
+uv run python app/migrate.py
+npm run prisma:db:pull
+npm run prisma:generate
+"""
+
+[tasks.dev]
+description = "Start/keep Postgres running, apply migrations, and run Python + Prisma demos."
+run = """
+docker compose up -d postgres
+mise run migrate
+uv run python app/demo.py
+npm run prisma:demo
+"""
