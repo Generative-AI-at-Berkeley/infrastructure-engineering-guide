@@ -28,13 +28,43 @@ docker compose up -d
 
 If `docker compose` does not work, try `docker-compose up -d`.
 
-### 2) Set Up Python
+### 2) Install uv + ruff + ty (Recommended)
+`uv` is a fast Python package manager. `ruff` is linting + formatting. `ty` is type checking.
+
+If you have Homebrew (Mac):
+
+```bash
+brew install uv
+```
+
+Otherwise:
+
+```bash
+python -m pip install --user uv
+```
+
+Install the tools:
+
+```bash
+uv tool install ruff
+uv tool install ty
+```
+
+Quick sanity check:
+
+```bash
+uv --version
+ruff --version
+ty --version
+```
+
+### 3) Set Up Python
 Create a virtual environment and install the one dependency:
 
 ```bash
-python -m venv .venv
+uv venv
 source .venv/bin/activate
-pip install -r requirements.txt
+uv pip install -r requirements.txt
 ```
 
 On Windows PowerShell:
@@ -43,7 +73,7 @@ On Windows PowerShell:
 .venv\Scripts\Activate.ps1
 ```
 
-### 3) Run The First Migration
+### 4) Run The First Migration
 This creates the `students` table.
 
 ```bash
@@ -56,7 +86,7 @@ python app/migrate.py
 docker compose exec postgres psql -U app -d app -c "\dt"
 ```
 
-### 4) Make A Schema Change
+### 5) Make A Schema Change
 Create a new migration file called `migrations/002_add_email.sql` with this content:
 
 ```sql
@@ -65,13 +95,13 @@ ALTER TABLE students ADD COLUMN email TEXT;
 
 The number at the start of the filename matters because migrations run in order.
 
-### 5) Run Migrations Again
+### 6) Run Migrations Again
 
 ```bash
 python app/migrate.py
 ```
 
-### 6) Insert And Read Data
+### 7) Insert And Read Data
 Now that the `email` column exists, run the demo script:
 
 ```bash
