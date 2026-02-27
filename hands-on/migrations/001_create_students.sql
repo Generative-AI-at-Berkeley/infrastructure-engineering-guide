@@ -1,0 +1,6 @@
+CREATE TABLE students (
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL,
+  class_year INTEGER NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
