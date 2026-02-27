@@ -1,0 +1,33 @@
+# OS junk
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+.cursor/
+
+# Env files
+.env
+.env.*
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Build outputs
+build/
+dist/
+
+# Docker local volumes (if any are added later)
+**/docker-data/
