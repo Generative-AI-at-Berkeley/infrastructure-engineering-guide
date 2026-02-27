@@ -1,25 +1,24 @@
-# Hands-On: A Tiny App With Real Infrastructure Basics
+# Hands-On App (Tiny Postgres + Migrations)
 
-This is a beginner-friendly, step-by-step walkthrough. You will:
-- Start a real Postgres database with Docker
+This is a tiny, beginner-friendly app you can run locally. It exists so you can practice real production basics without any complexity.
+
+You will:
+- Start a real Postgres database
 - Apply a migration to create a table
-- Add a new column with a second migration
-- Insert and read data with a tiny Python script
+- Add a column with a second migration
+- Insert and read data with Python
 
-No cloud, no IaC, no fancy frameworks. Just the basics that every real app needs.
+No cloud. No deployment. Just the fundamentals.
 
-## Folder Layout
+## What Is In This Folder
 - `docker-compose.yml` starts Postgres
 - `migrations/` holds numbered SQL migrations
 - `app/migrate.py` applies migrations in order
 - `app/demo.py` inserts and reads data
 
-## Step 0: Prereqs
-Install these once:
-- Docker Desktop
-- Python 3.10+ (3.11 is great)
+## Getting Started
 
-## Step 1: Start Postgres
+### 1) Start Postgres
 From this folder:
 
 ```bash
@@ -29,9 +28,7 @@ docker compose up -d
 
 If `docker compose` does not work, try `docker-compose up -d`.
 
-Give it a few seconds to boot the first time.
-
-## Step 2: Set Up Python
+### 2) Set Up Python
 Create a virtual environment and install the one dependency:
 
 ```bash
@@ -46,7 +43,7 @@ On Windows PowerShell:
 .venv\Scripts\Activate.ps1
 ```
 
-## Step 3: Run The First Migration
+### 3) Run The First Migration
 This creates the `students` table.
 
 ```bash
@@ -59,23 +56,22 @@ python app/migrate.py
 docker compose exec postgres psql -U app -d app -c "\dt"
 ```
 
-## Step 4: Change The Schema (Add A Column)
+### 4) Make A Schema Change
 Create a new migration file called `migrations/002_add_email.sql` with this content:
 
 ```sql
 ALTER TABLE students ADD COLUMN email TEXT;
 ```
 
-You can create it however you want (editor or copy/paste). The filename number matters because migrations run in order.
+The number at the start of the filename matters because migrations run in order.
 
-## Step 5: Run Migrations Again
-This applies the new migration and adds the column.
+### 5) Run Migrations Again
 
 ```bash
 python app/migrate.py
 ```
 
-## Step 6: Insert And Read Data
+### 6) Insert And Read Data
 Now that the `email` column exists, run the demo script:
 
 ```bash
@@ -84,7 +80,7 @@ python app/demo.py
 
 You should see a new row printed.
 
-## Step 7: Shut Down (When You're Done)
+## Shut Down
 
 ```bash
 docker compose down
@@ -101,4 +97,4 @@ docker compose down -v
 - How migrations apply schema changes safely and in order
 - Why code depends on the database schema, not the other way around
 
-When you do this on a real team, the same patterns apply. The tools get bigger, but the idea stays the same.
+That is the same flow you will see on real teams. The tools get bigger, but the idea stays the same.
