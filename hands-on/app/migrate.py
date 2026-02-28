@@ -59,3 +59,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+def do_something():
+    print("do something")
