@@ -70,7 +70,7 @@ def do_something():
 # def do_something_else():
 #     print("doing something else")
 
-# def main():
-#     do_something()
+def main():
+    do_something()
 #     do_something_else()
 
