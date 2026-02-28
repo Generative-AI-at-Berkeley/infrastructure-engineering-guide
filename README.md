@@ -1,121 +1,36 @@
-# Software Engineering Infra Guide
+# How Real Apps Ship
 
-## Quick Nav Tabs
+This repo is a guided walkthrough of production infrastructure. It is built for CS students who can code but have never shipped.
 
-USE THESE TO LEARN ABOUT EACH STEP! THESE ARE IMPORTANT I WOULD RECOMMEND NOT SKIPPING. 
+**Start Here**
+Do the hands-on lab first:
+- `hands-on/README.md`
 
-KNOWING THIS IS HIGHKEY WHAT SEPARATES YOU FROM EVERY OTHER STUDENTS!!!
- 
-[![01 Docker Compose](https://img.shields.io/badge/01-Docker%20Compose-1f6feb?style=for-the-badge)](./01-docker-compose/)
-[![02 mise](https://img.shields.io/badge/02-mise-1f6feb?style=for-the-badge)](./02-mise/)
-[![03 Python Tooling](https://img.shields.io/badge/03-Python%20Tooling-1f6feb?style=for-the-badge)](./03-python-tooling/)
-[![04 Schema and Migrations](https://img.shields.io/badge/04-Schema%20%26%20Migrations-1f6feb?style=for-the-badge)](./04-schema-and-migrations/)
-[![05 CI Pipeline](https://img.shields.io/badge/05-CI%20Pipeline-1f6feb?style=for-the-badge)](./05-ci-pipeline/)
-[![06 Deployment Pipeline](https://img.shields.io/badge/06-Deployment%20Pipeline-1f6feb?style=for-the-badge)](./06-deployment-pipeline/)
-[![07 Keyless Auth](https://img.shields.io/badge/07-Keyless%20Auth-1f6feb?style=for-the-badge)](./07-keyless-auth/)
-[![08 Docker Multi-Stage](https://img.shields.io/badge/08-Docker%20Multi--Stage-1f6feb?style=for-the-badge)](./08-docker-multi-stage/)
-[![09 Infrastructure as Code](https://img.shields.io/badge/09-Infrastructure%20as%20Code-1f6feb?style=for-the-badge)](./09-infrastructure-as-code/)
+It is small, real, and runnable. You will start Postgres, run migrations, and touch real data.
 
-**Setup**
-If you're using VS Code, Cursor, Windsurf, or any VS Code fork, install a markdown preview extension so these docs are way easier to read:
+**Deep Dives**
+Each folder explains one production layer with real code examples:
+- `guide/01-docker-compose/`
+- `guide/02-mise/`
+- `guide/03-python-tooling/`
+- `guide/04-schema-and-migrations/`
+- `guide/05-ci-pipeline/`
+- `guide/06-deployment-pipeline/`
+- `guide/07-keyless-auth/`
+- `guide/08-docker-multi-stage/`
+- `guide/09-infrastructure-as-code/`
 
-To preview any markdown file: `Cmd+Shift+V` (Mac) or `Ctrl+Shift+V` (Windows/Linux). Or open the command palette (`Cmd+Shift+P`) and search "Markdown: Open Preview to the Side".
+**How To Replicate This Infrastructure (Copy/Paste Plan)**
+If you want to bring these patterns into your own project:
+1. Add a `docker-compose.yml` that mirrors your dependencies. See `guide/01-docker-compose/`.
+2. Pin tool versions and create one-command tasks. See `guide/02-mise/` for the pattern (mise/asdf/Makefile all work).
+3. Lock Python deps and enforce a single quality gate. See `guide/03-python-tooling/`.
+4. Add numbered migrations and run them before deploy. See `guide/04-schema-and-migrations/`.
+5. Add CI that runs only what changed. See `guide/05-ci-pipeline/`.
+6. Add a chained deploy workflow. See `guide/06-deployment-pipeline/`.
+7. Use OIDC so CI can deploy without keys. See `guide/07-keyless-auth/`.
+8. Use multi-stage Docker so prod images are small and safe. See `guide/08-docker-multi-stage/`.
+9. Add IaC when you are ready. See `guide/09-infrastructure-as-code/`.
 
-**What Makes A Good Codebase**
-A good codebase is not about clever code. It is about infrastructure that makes the team fast and safe. Can a new engineer clone the repo and be running in 10 minutes? Can you deploy with confidence? Can you roll back? Do your tests actually catch bugs before production?
-
-About 80% of most production is composed of CI pipelines, container builds, database migration strategies, secret management flow, and deployment flow, and only 20% on the code.
-
-**The Layers Of A Production Codebase**
-
-## 1. Docker Compose
-
-**What it is:** A local container stack that mirrors prod dependencies.
-
-**Why you need it:** Your app depends on Postgres, Redis, S3, email, and more. You need those locally or you can't test database connection code.
-
-**How often:** ~90% of production codebases use containers for local dev. So its like, very very very very likely will encounter this.
-
-**Deep dive:** [01-docker-compose](./01-docker-compose/)
-
-## 2. mise
-
-**What it is:** Tool version pinning and task runner in one place.
-
-Think of mise like a master chef's recipe book for your tools: it makes sure everyone on the team uses the exact same ingredients and steps (tool versions and commands), so every dish (your app) comes out the same, every time.
-
-**Why you need it:** Everyone needs the same versions or you will ship bugs that only happen on one laptop.
-
-**How often:** Tool version pinning shows up everywhere. The specific tool varies (mise, asdf, nvm+pyenv) but the pattern is universal. 100% of teams do this in some form.
-
-**Deep dive:** [02-mise](./02-mise/)
-
-## 3. Python tooling (uv, ruff, ty)
-
-**What it is:** Modern Python dependency, lint, and type tooling.
-
-**Why you need it:** Fast, deterministic environments and a single `check` gate that actually enforces quality.
-
-**How often:** If you are writing Python professionally, you will likely encounter `uv` within the next 1 to 2 years. It is rapidly replacing pip. ruff has already replaced flake8+black at most companies.
-
-**Deep dive:** [03-python-tooling](./03-python-tooling/)
-
-## 4. Schema and migrations
-
-*guys this might look boring but is actually very important and will highkey let the interviewers for a jr or even mid level role know that YOU KNOW BALL*
-
-**What it is:** Database schema as code plus numbered migration files.
-
-**Why you need it:** Production data changes safely and predictably with versioned history.
-
-**How often:** 100% of production apps with a database use migrations. The ORM varies (Prisma, Django, Alembic, Flyway) but numbered, versioned migration files are universal.
-
-**Deep dive:** [04-schema-and-migrations](./04-schema-and-migrations/)
-
-5. CI pipeline
-**What it is:** Automated checks on every change.
-**Why you need it:** You cannot scale review or trust without CI gates.
-**How often:** 100% of professional codebases have CI. GitHub Actions is the most common for startups. The path filtering pattern is standard for monorepos.
-**Deep dive:** [05-ci-pipeline](./05-ci-pipeline/)
-
-6. Deployment pipeline
-**What it is:** The workflow that turns a merge into a deploy.
-**Why you need it:** You need predictable, repeatable, auditable releases.
-**How often:** 100% of production apps have a deploy pipeline. The branch-based flow (main to stage to prod) with chained workflows is one of the most common patterns.
-**Deep dive:** [06-deployment-pipeline](./06-deployment-pipeline/)
-
-7. Keyless auth (OIDC / WIF)
-**What it is:** CI authenticates to cloud without static keys.
-**Why you need it:** Static service account keys are a security smell. Short-lived tokens are safer.
-**How often:** ~70%+ of teams deploying from CI to cloud use OIDC federation now. It is the modern standard.
-**Deep dive:** [07-keyless-auth](./07-keyless-auth/)
-
-8. Docker multi-stage builds
-**What it is:** Split build stages to keep prod images small.
-**Why you need it:** Smaller images are faster, safer, and cheaper to deploy.
-**How often:** ~80%+ of containerized apps use multi-stage builds. If you are deploying containers, you need this.
-**Deep dive:** [08-docker-multi-stage](./08-docker-multi-stage/)
-
-9. Infrastructure as code
-**What it is:** Cloud resources defined in code, not clicks.
-**Why you need it:** Reproducibility, reviewability, and no mystery drift.
-**How often:** ~80% of production infrastructure is managed as code. Terraform is the most common tool, but Pulumi, CDK, and CloudFormation follow the same principles.
-**Deep dive:** [09-infrastructure-as-code](./09-infrastructure-as-code/)
-
-**How These Pieces Fit Together**
-You clone the repo and run `mise install` to get the right tools. `docker-compose up` gives you the same local dependencies prod uses. You write code and push a branch. CI runs path filtered tests against a real Postgres. When you merge to main, a chained workflow deploys to staging, running migrations first and then shipping code. When you are ready, you merge to prod for a production deploy. All of it uses OIDC so no static keys leak. The deploy ships a slim multi-stage Docker image onto infrastructure defined in Terraform.
-
-**Summary Table**
-| Pattern | This Codebase / Applies Everywhere |
-| --- | --- |
-| Docker Compose | Local dependencies in containers, mirrors prod |
-| mise | Tool version pinning and task runner |
-| uv + ruff + ty | Fast, strict Python tooling gate |
-| Schema and migrations | Numbered migrations, schema as code |
-| CI pipeline | Path-filtered tests, service containers |
-| Deployment pipeline | Chained deploys, migrations before code |
-| Keyless auth | OIDC federation, no static keys |
-| Docker multi-stage | Small, secure production images |
-| Infrastructure as code | Terraform modules, reproducible infra |
-
-its important to understand that UI frameworks like react, nextjs, etc will change every 3 years but these infra patterns won't
+**Why This Matters**
+A good codebase is not clever code. It is infrastructure that makes teams fast and safe. The UI framework will change every 3 years. These patterns will not.
