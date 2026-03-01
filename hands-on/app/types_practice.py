@@ -91,5 +91,5 @@ bad_row: StudentRow = {
 }
 
 # Example 2: None handling bug.
-# def broken_email_domain(student: Student) -> str:
-#     return student.email.split("@")[-1]  # student.email can be None
+ def broken_email_domain(student: Student) -> str:
+     return student.email.split("@")[-1]  # student.email can be None
