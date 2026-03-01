@@ -51,7 +51,7 @@ def to_student(row: StudentRow) -> Student:
         id=row["id"],
         name=row["name"],
         class_year=row["class_year"],
-        #email=row["email"],
+        email=row["email"],
     )
 
 

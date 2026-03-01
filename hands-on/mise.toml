@@ -4,7 +4,7 @@ node = "20"
 uv = "latest"
 
 [env]
-DATABASE_URL = "postgresql://app:app@localhost:5432/app?schema=public"
+DATABASE_URL = "postgresql://app:app@localhost:5432/app"
 
 [tasks.install]
 description = "Install Python and Prisma dependencies."
