@@ -15,7 +15,7 @@ class StudentRow(TypedDict):
 class Student:
     id: int
     name: str
-    class_year: int
+    class_year: str
     email: str | None
 
 
@@ -83,13 +83,14 @@ if __name__ == "__main__":
 # ---------------------------
 
 #Example 1: wrong field type for schema row shape.
-bad_row: StudentRow = {
+'''bad_row: StudentRow = {
      "id": "1",  # should be int
      "name": "Ada",
      "class_year": 2,
      "email": "ada@example.com",
-}
+}'''
 
 # Example 2: None handling bug.
- def broken_email_domain(student: Student) -> str:
-     return student.email.split("@")[-1]  # student.email can be None
+'''def broken_email_domain(student: Student) -> str:
+     return student.email.split("@")[-1]  # student.email can be None 
+'''
