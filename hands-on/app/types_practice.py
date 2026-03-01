@@ -82,13 +82,13 @@ if __name__ == "__main__":
 #   ty check app/types_practice.py
 # ---------------------------
 
-# Example 1: wrong field type for schema row shape.
-# bad_row: StudentRow = {
-#     "id": "1",  # should be int
-#     "name": "Ada",
-#     "class_year": 2,
-#     "email": "ada@example.com",
-# }
+#Example 1: wrong field type for schema row shape.
+bad_row: StudentRow = {
+     "id": "1",  # should be int
+     "name": "Ada",
+     "class_year": 2,
+     "email": "ada@example.com",
+}
 
 # Example 2: None handling bug.
 # def broken_email_domain(student: Student) -> str:
