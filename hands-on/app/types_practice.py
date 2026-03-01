@@ -7,7 +7,7 @@ from db import get_conn
 class StudentRow(TypedDict):
     id: int
     name: str
-    class_year: int
+    class_year: str
     email: str | None
 
 
